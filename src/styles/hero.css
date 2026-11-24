@@ -2,22 +2,25 @@
    Por trás, a estátua em geada; no eixo, o advogado; o título em duas metades,
    uma de cada lado dele. As medidas da geada (--g-*) ficam aqui, no dono. */
 .hero {
-  /* a geada, em unidades da forma (a caixa da estátua tem 1751 de altura) */
-  --g-alt: 1751;
-  --g-foco-0: 500;
-  --g-foco-1: 860;
-  --g-sigma: 88;
-  --g-curva: 1.25;
+  /* a geada, em unidades da forma: px do desenho, que tem 1536 × 1024.
+     Nítida até o peito dela (a cabeça, a espada e a balança); fosca daí
+     para baixo, onde o advogado sai de dentro */
+  --g-alt: 1024;
+  --g-foco-0: 600;
+  --g-foco-1: 1000;
+  --g-sigma: 46;
+  --g-curva: 1.2;
   --g-some-0: 880;
-  --g-some-1: 965;
+  --g-some-1: 1020;
   --g-grao: 0.14;
   --g-giro: 1;
-  --g-cheia: 5;
+  --g-cheia: 26;
 
   /* a cena */
-  --j-esc: calc(0.82 * var(--u));          /* px por unidade da forma */
-  --j-alt: calc(1751 * var(--j-esc));      /* a altura do quadro da estátua */
-  --j-topo: calc(40 * var(--u));           /* onde começa o quadro da estátua */
+  --j-esc: calc(0.5 * var(--u));           /* px da cena por px do desenho */
+  --j-alt: calc(1024 * var(--j-esc));      /* a altura do quadro da estátua */
+  --j-topo: calc(66 * var(--u));           /* onde começa o quadro da estátua */
+  --j-eixo: 580;                           /* x da cabeça dela no desenho: fica no eixo */
   --f-alt: calc(420 * var(--u));           /* a altura da foto do advogado */
   --f-pe: calc(-14 * var(--u));            /* quanto a foto passa do pé da cena */
   --f-foco: 0.64;                          /* onde a foto começa a ficar fosca */
@@ -59,9 +62,9 @@
   position: absolute;
   left: 50%;
   top: var(--j-topo);
-  width: calc(1200 * var(--j-esc));
+  width: calc(1536 * var(--j-esc));
   height: var(--j-alt);
-  margin-left: calc(-600 * var(--j-esc));
+  margin-left: calc(-1 * var(--j-eixo) * var(--j-esc));
   pointer-events: none;
 }
 
@@ -74,8 +77,8 @@
 .sem-gl .hero__estatua-img {
   display: block;
   opacity: 0.92;
-  -webkit-mask-image: linear-gradient(to bottom, #000 27%, rgb(0 0 0 / 0.35) 45%, transparent 56%);
-  mask-image: linear-gradient(to bottom, #000 27%, rgb(0 0 0 / 0.35) 45%, transparent 56%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, rgb(0 0 0 / 0.35) 82%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 58%, rgb(0 0 0 / 0.35) 82%, transparent 98%);
 }
 
 /* ——— o título e os textos ——— */
@@ -230,13 +233,11 @@
 @media (max-width: 760px) {
   .hero {
     --c: calc(100vw / 390);                /* main.js acerta pela sobra da tela */
-    --g-some-0: 1040;
-    --g-some-1: 1130;
-    --g-foco-0: 600;
-    --g-foco-1: 960;
-    --g-sigma: 70;
-    --j-esc: calc(0.335 * var(--c));
-    --j-topo: calc(44 * var(--c));
+    --g-foco-0: 640;
+    --g-sigma: 40;
+    --j-esc: calc(0.3 * var(--c));
+    --j-topo: calc(70 * var(--c));
+    --j-eixo: 759;                         /* no celular, o desenho inteiro cabe na largura */
     --f-alt: calc(262 * var(--c));
     --f-pe: 0px;
     --f-foco: 0.6;

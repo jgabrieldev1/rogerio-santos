@@ -3,7 +3,7 @@
    geada do rodapé; mede tudo de novo quando a tela muda.
    CSS nunca entra por aqui: a folha única vem pelo <link> do <head>. */
 import { criaGeada } from './gl/geada.js'
-import { pintaJustica } from './gl/justica.js'
+import { pintaJustica, justicaPronta } from './gl/justica.js'
 import { tocaAbertura, semAbertura } from './motion/abertura.js'
 import { igualaTitulo } from './motion/titulo.js'
 import { iniciaPonteiro } from './motion/ponteiro.js'
@@ -97,7 +97,7 @@ const ponteiro = iniciaPonteiro(hero, geada)
 async function espera() {
   const fontes = Promise.all(FONTES.map((f) => document.fonts.load(f))).catch(() => {})
   const foto = retrato.decode ? retrato.decode().catch(() => {}) : Promise.resolve()
-  await Promise.race([Promise.all([fontes, foto]), new Promise((r) => setTimeout(r, 3200))])
+  await Promise.race([Promise.all([fontes, foto, justicaPronta]), new Promise((r) => setTimeout(r, 3200))])
 }
 
 acertaCena()
