@@ -1,0 +1,26 @@
+/* 02 — Manifesto: uma frase só, centrada no eixo, que sai do fosco palavra por palavra. */
+.manifesto { padding-block: calc(var(--folga) * 1.1) }
+
+.manifesto__frase {
+  max-width: calc(980 * var(--su));
+  margin: 0 auto;
+  font-family: var(--serifa);
+  font-size: calc(46 * var(--su));
+  line-height: 1.24;
+  letter-spacing: -0.012em;
+  color: var(--titulo);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.manifesto__frase em { font-style: italic }
+
+.manifesto__frase.is-vivo .palavra {
+  opacity: 0.13;
+  filter: blur(7px);
+  will-change: opacity, filter;
+}
+
+@media (max-width: 760px) {
+  .manifesto__frase { font-size: 29px; line-height: 1.26 }
+}

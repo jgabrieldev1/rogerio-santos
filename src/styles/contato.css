@@ -1,0 +1,120 @@
+/* 07 — Contato: o fecho da página. À esquerda, o título maior e o WhatsApp;
+   à direita, a ficha de três campos em linhas de fio. */
+.contato__grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(96 * var(--su));
+  align-items: start;
+}
+
+.contato__titulo { font-size: calc(80 * var(--su)); line-height: 1.02; max-width: 9ch }
+.contato__lado .secao__apoio { margin-top: 26px }
+
+.contato__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  margin-top: 36px;
+}
+
+.contato__tel { font-size: 17px; color: var(--titulo) }
+
+.ficha { position: relative; padding-top: 8px }
+
+.ficha__campos { transition: opacity 0.6s var(--out), filter 0.6s var(--out) }
+
+.campo { position: relative; padding-top: 18px }
+
+.campo__rotulo {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--apoio);
+  transition: color 0.35s var(--out);
+}
+
+.campo__opcional { text-transform: none; letter-spacing: 0; font-weight: 400 }
+
+.campo__entrada {
+  display: block;
+  width: 100%;
+  padding: 10px 0 14px;
+  border: 0;
+  border-bottom: 1px solid var(--fio);
+  border-radius: 0;
+  background: transparent;
+  font-size: 18px;
+  color: var(--titulo);
+  resize: vertical;
+  transition: border-color 0.35s var(--out);
+}
+
+.campo__entrada:focus { outline: none; border-bottom-color: var(--titulo) }
+.campo:focus-within .campo__rotulo { color: var(--titulo) }
+
+@media (hover: hover) {
+  .campo__entrada:hover { border-bottom-color: var(--fio-forte) }
+  .campo__entrada:focus:hover { border-bottom-color: var(--titulo) }
+}
+
+.campo__erro {
+  min-height: 22px;
+  padding-top: 6px;
+  font-size: 14px;
+  color: var(--erro);
+}
+
+.campo.is-erro .campo__entrada { border-bottom-color: var(--erro) }
+.campo.is-erro .campo__rotulo { color: var(--erro) }
+
+.ficha__pe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  margin-top: 18px;
+}
+
+.ficha__nota { font-size: 14px; color: var(--apoio) }
+
+/* enviada: os campos somem no fosco e entra a confirmação */
+.ficha.is-enviada .ficha__campos { opacity: 0; filter: blur(12px); pointer-events: none; visibility: hidden; transition: opacity 0.6s var(--out), filter 0.6s var(--out), visibility 0s 0.6s }
+
+.ficha__ok {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0;
+  filter: blur(9px);
+  translate: 0 18px;
+  transition: opacity 0.7s var(--out) 0.35s, filter 0.7s var(--out) 0.35s, translate 0.85s var(--out) 0.35s;
+  outline: none;
+}
+.ficha__ok[hidden] { display: none }
+.ficha__ok:not(.is-vista) { pointer-events: none }
+.ficha__ok.is-vista { opacity: 1; filter: blur(0); translate: 0 0 }
+
+.ficha__ok-titulo {
+  font-family: var(--serifa);
+  font-style: italic;
+  font-size: calc(46 * var(--su));
+  color: var(--titulo);
+  line-height: 1.1;
+}
+.ficha__ok-texto { color: var(--texto); max-width: 36ch; font-size: 18px }
+
+@media (max-width: 760px) {
+  .contato__grade { grid-template-columns: 1fr; gap: 56px }
+  .contato__titulo { font-size: 46px }
+  .contato__acoes { flex-direction: column; align-items: stretch; text-align: center }
+  .contato__acoes .botao { width: 100% }
+  .contato__tel { align-self: center }
+  .ficha__pe .botao { width: 100% }
+  .ficha__ok-titulo { font-size: 34px }
+}

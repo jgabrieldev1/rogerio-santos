@@ -1,0 +1,298 @@
+/* 01 — Hero. Uma cena de 1440 × 840 (--u) presa ao pé e ao meio da tela.
+   Por trás, a estátua em geada; no eixo, o advogado; o título em duas metades,
+   uma de cada lado dele. As medidas da geada (--g-*) ficam aqui, no dono. */
+.hero {
+  /* a geada, em unidades da forma (a caixa da estátua tem 1751 de altura) */
+  --g-alt: 1751;
+  --g-foco-0: 472;
+  --g-foco-1: 832;
+  --g-sigma: 88;
+  --g-curva: 1.25;
+  --g-some-0: 944;
+  --g-some-1: 1002;
+  --g-grao: 0.14;
+  --g-giro: 1;
+  --g-cheia: 5;
+
+  /* a cena */
+  --j-esc: calc(0.82 * var(--u));          /* px por unidade da forma */
+  --j-alt: calc(1751 * var(--j-esc));      /* a altura do quadro da estátua */
+  --j-topo: calc(40 * var(--u));           /* onde começa o quadro da estátua */
+  --f-alt: calc(420 * var(--u));           /* a altura da foto do advogado */
+  --f-pe: calc(-14 * var(--u));            /* quanto a foto passa do pé da cena */
+  --f-foco: 0.64;                          /* onde a foto começa a ficar fosca */
+  --t-tam: calc(145 * var(--u));           /* o tamanho do título */
+  --t-topo: calc(530 * var(--u));          /* onde começa o bloco do título */
+  --miolo: calc(236 * var(--u));           /* o vão entre as metades */
+
+  /* o ponteiro (ponteiro.js) */
+  --px-retrato: 0px;
+  --px-titulo: 0px;
+
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.hero__geada {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__cena {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(1440 * var(--u));
+  height: calc(840 * var(--u));
+  margin-left: calc(-720 * var(--u));
+}
+
+/* a caixa da estátua (a geada mede este elemento) */
+.hero__estatua {
+  position: absolute;
+  left: 50%;
+  top: var(--j-topo);
+  width: calc(1200 * var(--j-esc));
+  height: var(--j-alt);
+  margin-left: calc(-600 * var(--j-esc));
+  pointer-events: none;
+}
+
+/* sem WebGL, a estátua aparece como imagem, com o pé sumindo no fundo */
+.hero__estatua-img {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+.sem-gl .hero__estatua-img {
+  display: block;
+  opacity: 0.92;
+  -webkit-mask-image: linear-gradient(to bottom, #000 27%, rgb(0 0 0 / 0.35) 45%, transparent 56%);
+  mask-image: linear-gradient(to bottom, #000 27%, rgb(0 0 0 / 0.35) 45%, transparent 56%);
+}
+
+/* ——— o título e os textos ——— */
+.hero__texto {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: var(--t-topo);
+  display: grid;
+  grid-template-columns: 1fr var(--miolo) 1fr;
+  translate: var(--px-titulo) 0;
+}
+
+.hero__lado {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hero__lado--e { grid-column: 1; align-items: flex-end; text-align: right }
+.hero__lado--d { grid-column: 3; align-items: flex-start; text-align: left }
+
+.hero__nome {
+  font-family: var(--serifa);
+  font-style: italic;
+  font-size: max(15px, calc(22 * var(--u)));
+  line-height: 1.2;
+  color: var(--titulo);
+  margin-bottom: calc(16 * var(--u));
+  white-space: nowrap;
+}
+
+.hero__palavra {
+  --ls: 0px;
+  --ink-x: 0px;
+  --rev: 1;
+  display: block;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: var(--t-tam);
+  line-height: 0.8;
+  text-transform: uppercase;
+  color: var(--titulo);
+  letter-spacing: var(--ls);
+  white-space: nowrap;
+  font-kerning: normal;
+  /* folga para o acento (É) ficar dentro da máscara */
+  padding-block: 0.2em 0.06em;
+  margin-block: -0.2em -0.06em;
+  /* a revelação do miolo para fora, com a borda fosca (abertura.js mexe --rev) */
+  -webkit-mask-image: linear-gradient(var(--rev-dir), #000 calc(var(--rev) * 140% - 40%), transparent calc(var(--rev) * 140%));
+  mask-image: linear-gradient(var(--rev-dir), #000 calc(var(--rev) * 140% - 40%), transparent calc(var(--rev) * 140%));
+}
+
+/* a esquerda encosta no miolo pela direita: o espaço depois da última letra sai */
+.hero__palavra--e { --rev-dir: to left; margin-right: calc(-1 * var(--ls)); translate: calc(var(--ink-x) + var(--desliza, 0px)) 0 }
+.hero__palavra--d { --rev-dir: to right; translate: calc(var(--ink-x) + var(--desliza, 0px)) 0 }
+
+.hero__apoio {
+  margin-top: calc(26 * var(--u));
+  margin-right: calc(64 * var(--u));
+  max-width: max(250px, calc(300 * var(--u)));
+  font-size: max(14px, calc(16 * var(--u)));
+  line-height: 1.5;
+  color: var(--texto);
+  text-wrap: pretty;
+}
+
+.hero__acao {
+  margin-top: calc(26 * var(--u));
+  margin-left: calc(64 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(14 * var(--u));
+}
+
+.hero__plantao {
+  font-size: max(13px, calc(14 * var(--u)));
+  color: var(--apoio);
+  padding-left: 2px;
+}
+.hero__plantao::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--forma);
+  vertical-align: 0.12em;
+}
+
+/* ——— o advogado, por cima das letras, saindo do fosco ——— */
+.hero__retrato {
+  --rev: 1;
+  --nublado: 0px;
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: var(--f-pe);
+  height: var(--f-alt);
+  aspect-ratio: 1072 / 1352;
+  translate: calc(-50% + var(--px-retrato)) var(--sobe, 0px);
+  pointer-events: none;
+  filter: blur(var(--nublado));
+  /* a subida: o retrato sai do fosco de cima para baixo */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(var(--rev) * 130% - 30%), transparent calc(var(--rev) * 130%));
+  mask-image: linear-gradient(to bottom, #000 calc(var(--rev) * 130% - 30%), transparent calc(var(--rev) * 130%));
+}
+
+.hero__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: var(--retrato-filtro);
+}
+
+.hero__foto--nitida {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(var(--f-foco) * 100%), rgb(0 0 0 / 0.45) calc(var(--f-foco) * 100% + 14%), transparent calc(var(--f-foco) * 100% + 28%));
+  mask-image: linear-gradient(to bottom, #000 calc(var(--f-foco) * 100%), rgb(0 0 0 / 0.45) calc(var(--f-foco) * 100% + 14%), transparent calc(var(--f-foco) * 100% + 28%));
+}
+
+/* o pé da foto: uma cópia fosca, com grão de luz da forma, que some no fundo */
+.hero__foto--fosca {
+  filter: var(--retrato-filtro) blur(calc(16 * var(--u))) brightness(1.5);
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to bottom, transparent calc(var(--f-foco) * 100% - 2%), #000 calc(var(--f-foco) * 100% + 12%), rgb(0 0 0 / 0.35) 86%, transparent 96%);
+  mask-image: linear-gradient(to bottom, transparent calc(var(--f-foco) * 100% - 2%), #000 calc(var(--f-foco) * 100% + 12%), rgb(0 0 0 / 0.35) 86%, transparent 96%);
+}
+
+/* ——— computador mais baixo: o título encolhe um pouco ——— */
+@media (min-width: 761px) and (max-aspect-ratio: 1440 / 760) {
+  .hero { --t-topo: calc(520 * var(--u)) }
+}
+
+/* ——— celular: a cena em cima, o título empilhado por cima do pé da foto ——— */
+@media (max-width: 760px) {
+  .hero {
+    --c: calc(100vw / 390);                /* main.js acerta pela sobra da tela */
+    --g-some-0: 1040;
+    --g-some-1: 1130;
+    --g-foco-1: 880;
+    --g-sigma: 70;
+    --j-esc: calc(0.355 * var(--c));
+    --j-topo: calc(44 * var(--c));
+    --f-alt: calc(262 * var(--c));
+    --f-pe: 0px;
+    --f-foco: 0.6;
+    --t-tam: calc(96 * var(--su));
+    --cena-alt: 470;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100svh;
+    min-height: 0;
+    padding: 0 20px calc(20px + env(safe-area-inset-bottom));
+  }
+
+  /* a cena vira uma coluna: em cima, o espaço da estátua e do advogado
+     (--cena-alt × --c); o título sobe por cima do pé da foto */
+  .hero__cena {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    flex: none;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding-top: calc(var(--cena-alt) * var(--c) - var(--t-tam) * 1.15);
+  }
+
+  .hero__retrato {
+    top: calc(var(--cena-alt) * var(--c) - var(--f-alt));
+    bottom: auto;
+    z-index: 1;
+    translate: -50% var(--sobe, 0px);
+  }
+
+  .hero__texto {
+    position: relative;
+    z-index: 2;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    translate: none;
+  }
+
+  .hero__lado { display: contents }
+
+  .hero__palavra {
+    align-self: center;
+    font-size: var(--t-tam);
+    line-height: 0.82;
+    --rev-dir: to bottom;
+  }
+  .hero__palavra--e { order: 1 }
+  .hero__palavra--d { order: 2 }
+  .hero__palavra--e,
+  .hero__palavra--d { margin-right: calc(-1 * var(--ls)); translate: var(--ink-x) var(--desliza-y, 0px) }
+
+  .hero__nome { order: 3; margin: 18px 0 0; text-align: left; font-size: 17px }
+  .hero__nome--d { order: 4; margin-top: 2px; color: var(--apoio) }
+  .hero__apoio { order: 5; margin: 12px 0 0; max-width: none; text-align: left; font-size: 15px }
+  .hero__acao { order: 6; margin: 18px 0 0; align-items: stretch; gap: 12px }
+  .hero__acao .botao { width: 100% }
+  .hero__plantao { text-align: center }
+}
+
+/* tela baixa (o iPhone com as barras abertas): o título encolhe e o plantão sai */
+@media (max-width: 760px) and (max-height: 700px) {
+  .hero { --t-tam: calc(76 * var(--su)) }
+  .hero__plantao { display: none }
+  .hero__apoio { font-size: 14px }
+}

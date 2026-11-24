@@ -1,0 +1,228 @@
+/* Base: o fundo único, os tipos, os botões, os links e a entrada da casa. */
+*,
+*::before,
+*::after { box-sizing: border-box }
+
+html {
+  background: var(--fundo);
+  color: var(--texto);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  font-family: var(--sans);
+  font-size: calc(17 * var(--su));
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@media (max-width: 760px) { body { font-size: 16px } }
+
+img { display: block; max-width: 100% }
+a { color: inherit; text-decoration: none }
+button, input, textarea { font: inherit; color: inherit }
+h1, h2, h3, p, dl, dd, ul, ol { margin: 0; padding: 0 }
+ul, ol { list-style: none }
+
+::selection { background: var(--forma); color: var(--fundo) }
+
+:focus-visible {
+  outline: 1px solid var(--titulo);
+  outline-offset: 4px;
+}
+
+#conteudo { outline: none }
+
+/* Pular para o conteúdo: aparece com o primeiro Tab */
+.pular {
+  position: fixed;
+  z-index: 100;
+  left: 16px;
+  top: 16px;
+  padding: 12px 18px;
+  border-radius: 2px;
+  background: var(--cta);
+  color: var(--sobre-cta);
+  font-weight: 600;
+  translate: 0 -160%;
+  transition: translate 0.4s var(--out);
+}
+.pular:focus-visible { translate: 0 0 }
+
+/* ——— seções ——— */
+.secao {
+  position: relative;
+  padding: var(--folga) var(--lateral);
+}
+
+.secao__dentro {
+  max-width: var(--largura);
+  margin: 0 auto;
+}
+
+.secao__titulo {
+  font-family: var(--serifa);
+  font-weight: 400;
+  font-size: var(--t-secao);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--titulo);
+  text-wrap: balance;
+}
+
+.secao__titulo em,
+.serifa em { font-style: italic }
+
+.secao__apoio {
+  color: var(--apoio);
+  font-size: calc(18 * var(--su));
+  line-height: 1.5;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 760px) { .secao__apoio { font-size: 16px } }
+
+.rotulo {
+  font-family: var(--sans);
+  font-size: calc(13 * var(--su));
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--apoio);
+}
+
+@media (max-width: 760px) { .rotulo { font-size: 12px } }
+
+/* ——— botões ——— */
+.botao {
+  --seta: 0px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 26px;
+  border-radius: 2px;
+  border: 1px solid var(--cta);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.35s var(--out),
+    color 0.35s var(--out),
+    box-shadow 0.5s var(--out),
+    scale 0.25s var(--out);
+}
+
+.botao__seta {
+  display: inline-block;
+  translate: var(--seta) 0;
+  transition: translate 0.45s var(--out);
+}
+
+.botao--cheio {
+  background: var(--cta);
+  color: var(--sobre-cta);
+}
+
+.botao--contorno {
+  background: transparent;
+  color: var(--titulo);
+  border-color: var(--fio-forte);
+}
+
+@media (hover: hover) {
+  .botao--cheio:hover {
+    --seta: 5px;
+    box-shadow: 0 0 0 6px rgb(from var(--cta) r g b / 0.12), 0 0 36px 4px rgb(from var(--cta) r g b / 0.28);
+  }
+  .botao--contorno:hover {
+    --seta: 5px;
+    background: var(--cta);
+    border-color: var(--cta);
+    color: var(--sobre-cta);
+  }
+}
+
+.botao:active { scale: 0.97 }
+
+/* ——— links com fio que nasce da esquerda ——— */
+.link {
+  position: relative;
+  display: inline-block;
+  color: var(--texto);
+  transition: color 0.35s var(--out);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--out);
+}
+
+@media (hover: hover) {
+  .link:hover { color: var(--titulo) }
+  .link:hover::after { transform: scaleX(1) }
+}
+.link:focus-visible { color: var(--titulo) }
+.link:focus-visible::after { transform: scaleX(1) }
+.link:active { scale: 0.97 }
+
+/* ——— A ENTRADA DA CASA: tudo sai do fosco ———
+   A peça com data-revela nasce apagada, com 9 px de desfoque e 18 px abaixo;
+   quando chega ao pé da tela, assenta em 0,7 s (0,85 s a subida). */
+[data-revela] {
+  opacity: 0;
+  filter: blur(9px);
+  translate: 0 18px;
+  transition:
+    opacity 0.7s var(--out),
+    filter 0.7s var(--out),
+    translate 0.85s var(--out);
+  transition-delay: calc(var(--ordem, 0) * 50ms);
+}
+
+[data-revela].revelou {
+  opacity: 1;
+  filter: blur(0);
+  translate: 0 0;
+}
+
+/* depois de assentar, a peça larga o filtro (nada fica desfocado nem pesado) */
+[data-revela].assentado { filter: none; transition-delay: 0s }
+
+.calmo [data-revela] {
+  filter: none;
+  translate: 0 0;
+  transition: opacity 0.4s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important }
+}
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

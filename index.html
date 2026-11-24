@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rogério Santos · Advocacia em Cuiabá · OAB/MT 16.405</title>
+  <meta name="description" content="Rogério Antunes dos Santos, advogado em Cuiabá desde 2013 (OAB/MT 16.405). Direito condominial, consumidor, empresarial, contratos, família e correspondente jurídico em todo o Mato Grosso.">
+  <meta name="theme-color" content="#0b0c0e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes de qualquer arquivo: o tema, a classe js e a rede de segurança.
+    (function () {
+      var d = document.documentElement
+      var q = new URLSearchParams(location.search)
+      var temas = { geada: '#0b0c0e', marfim: '#100e0b', ouro: '#0d0c0a' }
+      var t = q.get('tema')
+      if (!temas[t]) t = 'geada'
+      d.dataset.tema = t
+      d.style.background = temas[t]
+      d.classList.add('js')
+      var calmo = matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (q.has('pronto') || location.hash.length > 1 || calmo) d.classList.add('sem-abertura')
+      if (calmo) d.classList.add('calmo')
+      // Se o JS não subir em 4 s, a página aparece pronta, sem abertura.
+      setTimeout(function () {
+        if (!d.classList.contains('vivo')) d.classList.add('sem-abertura', 'aberto', 'assentou')
+      }, 4000)
+    })()
+  </script>
+  <style>
+    html { background: #0b0c0e; color-scheme: dark }
+    html:not(.assentou) * { transition: none !important }
+    .js:not(.aberto) [data-abre],
+    .js:not(.aberto) [data-abre-topo] { opacity: 0 }
+    .js:not(.sem-abertura):not(.aberto) .hero__palavra { opacity: 0 }
+    .js:not(.sem-abertura):not(.aberto) .hero__retrato { opacity: 0 }
+    .js [data-revela]:not(.revelou) { opacity: 0 }
+  </style>
+  <link rel="stylesheet" href="/src/styles/site.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <!-- @secao topo -->
+  <main>
+    <!-- @secao hero -->
+    <div id="conteudo" tabindex="-1"></div>
+    <!-- @secao manifesto -->
+    <!-- @secao atendimento -->
+    <!-- @secao atuacao -->
+    <!-- @secao advogado -->
+    <!-- @secao duvidas -->
+    <!-- @secao contato -->
+  </main>
+  <!-- @secao rodape -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

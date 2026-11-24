@@ -1,0 +1,16 @@
+/* A folha única do site, ligada por <link> no <head>. Nunca importe CSS pelo JS. */
+@import '@fontsource-variable/sofia-sans-extra-condensed/wght.css';
+@import '@fontsource-variable/sofia-sans/wght.css';
+@import '@fontsource/libre-caslon-text/400.css';
+@import '@fontsource/libre-caslon-text/400-italic.css';
+@import './tokens.css';
+@import './base.css';
+@import './topo.css';
+@import './hero.css';
+@import './manifesto.css';
+@import './atendimento.css';
+@import './atuacao.css';
+@import './advogado.css';
+@import './duvidas.css';
+@import './contato.css';
+@import './rodape.css';

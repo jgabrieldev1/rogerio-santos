@@ -1,0 +1,80 @@
+/* 04 — Atuação: o título acompanha a tela à esquerda enquanto a lista passa.
+   Com o mouse, a linha sob o cursor fica em foco e as outras ficam foscas. */
+.atuacao__grade {
+  display: grid;
+  grid-template-columns: 4fr 7fr;
+  gap: calc(64 * var(--su));
+}
+
+.atuacao__fixo {
+  position: sticky;
+  top: calc(120 * var(--su));
+}
+
+.atuacao__fixo .secao__apoio { margin-top: 22px }
+
+.areas { border-top: 1px solid var(--fio) }
+
+.area { border-bottom: 1px solid var(--fio) }
+
+.area__link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'nome seta' 'frase seta';
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 6px;
+  padding: calc(26 * var(--su)) 4px calc(26 * var(--su)) 0;
+  transition:
+    opacity 0.5s var(--out),
+    filter 0.5s var(--out),
+    scale 0.25s var(--out);
+}
+
+.area__nome {
+  grid-area: nome;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: calc(58 * var(--su));
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--titulo);
+  transition: translate 0.55s var(--out);
+}
+
+.area__frase {
+  grid-area: frase;
+  color: var(--apoio);
+  font-size: calc(16 * var(--su));
+  max-width: 52ch;
+  transition: color 0.5s var(--out), translate 0.55s var(--out);
+}
+
+.area__seta {
+  grid-area: seta;
+  font-size: calc(28 * var(--su));
+  color: var(--apoio);
+  transition: color 0.4s var(--out), translate 0.55s var(--out);
+}
+
+@media (hover: hover) {
+  html:not(.is-scrolling) .areas:hover .area__link { opacity: 0.32; filter: blur(3px) }
+  html:not(.is-scrolling) .areas:hover .area__link:hover { opacity: 1; filter: none }
+  html:not(.is-scrolling) .area__link:hover .area__nome,
+  html:not(.is-scrolling) .area__link:hover .area__frase { translate: 12px 0 }
+  html:not(.is-scrolling) .area__link:hover .area__frase { color: var(--texto) }
+  html:not(.is-scrolling) .area__link:hover .area__seta { color: var(--titulo); translate: 4px 0 }
+}
+
+.area__link:focus-visible { outline-offset: 2px }
+.area__link:focus-visible .area__seta { color: var(--titulo) }
+.area__link:active { scale: 0.99 }
+
+@media (max-width: 760px) {
+  .atuacao__grade { grid-template-columns: 1fr; gap: 40px }
+  .atuacao__fixo { position: static }
+  .area__link { padding: 20px 0; column-gap: 14px }
+  .area__nome { font-size: 40px }
+  .area__frase { font-size: 15px }
+  .area__seta { font-size: 22px }
+}

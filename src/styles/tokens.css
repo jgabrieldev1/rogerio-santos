@@ -1,0 +1,77 @@
+/* Cores em papéis, nunca pelo nome. Os temas trocam a paleta inteira. */
+:root,
+[data-tema='geada'] {
+  --fundo: #0b0c0e;
+  --forma: #eef1f4;
+  --forma-fria: #a9b3bf;
+  --titulo: #f3f5f7;
+  --texto: #c5c9d0;
+  --apoio: #8b919b;
+  --fio: rgb(255 255 255 / 0.16);
+  --fio-forte: rgb(255 255 255 / 0.42);
+  --cta: #eef1f4;
+  --sobre-cta: #0b0c0e;
+  --erro: #ff8a7a;
+  --vidro: rgb(11 12 14 / 0.62);
+  --retrato-filtro: grayscale(1) contrast(1.06) brightness(0.96);
+}
+
+[data-tema='marfim'] {
+  --fundo: #100e0b;
+  --forma: #f4ecdd;
+  --forma-fria: #b9ab93;
+  --titulo: #f6efe2;
+  --texto: #d2c9b9;
+  --apoio: #978c7b;
+  --fio: rgb(255 244 222 / 0.16);
+  --fio-forte: rgb(255 244 222 / 0.42);
+  --cta: #f4ecdd;
+  --sobre-cta: #100e0b;
+  --vidro: rgb(16 14 11 / 0.62);
+  --retrato-filtro: grayscale(1) sepia(0.18) contrast(1.05) brightness(0.96);
+}
+
+[data-tema='ouro'] {
+  --fundo: #0d0c0a;
+  --forma: #e9c77b;
+  --forma-fria: #8f7440;
+  --titulo: #f5ead2;
+  --texto: #cfc6b4;
+  --apoio: #938a78;
+  --fio: rgb(233 199 123 / 0.2);
+  --fio-forte: rgb(233 199 123 / 0.5);
+  --cta: #e9c77b;
+  --sobre-cta: #0d0c0a;
+  --vidro: rgb(13 12 10 / 0.62);
+  --retrato-filtro: contrast(1.04) saturate(0.9);
+}
+
+:root {
+  --display: 'Sofia Sans Extra Condensed Variable', 'Arial Narrow', sans-serif;
+  --sans: 'Sofia Sans Variable', system-ui, sans-serif;
+  --serifa: 'Libre Caslon Text', Georgia, serif;
+
+  /* as duas curvas da casa */
+  --out: cubic-bezier(0.16, 1, 0.3, 1);
+  --foco: cubic-bezier(0.62, 0, 0.16, 1);
+
+  /* escala de cena: 1 px num quadro de 1440 × 840 que acompanha a tela */
+  --u: min(calc(100vw / 1440), calc(100svh / 840));
+  /* escala de site: 1 px a partir de 1280, encolhe abaixo, nunca cresce */
+  --su: min(1px, calc(100vw / 1280));
+
+  --largura: calc(1200 * var(--su));
+  --lateral: max(24px, calc((100vw - var(--largura)) / 2));
+  --folga: calc(152 * var(--su));
+  --t-secao: calc(60 * var(--su));
+}
+
+@media (max-width: 760px) {
+  :root {
+    --su: calc(100vw / 390);
+    --lateral: 20px;
+    --largura: calc(100vw - 40px);
+    --folga: 96px;
+    --t-secao: 38px;
+  }
+}

@@ -1,0 +1,100 @@
+/* 08 — Rodapé: um fio, três colunas e a linha legal. No pé, o nome de ponta a
+   ponta do conteúdo, na mesma geada do hero, cortado pela base da página. */
+.rodape {
+  /* a geada do nome: a caixa tem a altura das maiúsculas = 100 unidades */
+  --g-alt: 100;
+  --g-foco-0: 14;
+  --g-foco-1: 74;
+  --g-sigma: 9;
+  --g-curva: 1.25;
+  --g-some-0: 66;
+  --g-some-1: 76;
+  --g-grao: 0.14;
+  --g-giro: 1;
+  --g-cheia: 1;
+  --fecho-prop: 0.5;   /* altura das maiúsculas / largura da palavra (fecho.js mede) */
+  --corte: 0.7;        /* quanto da altura do nome aparece antes da base */
+
+  position: relative;
+  padding: calc(var(--folga) * 0.6) var(--lateral) 0;
+  overflow: clip;
+}
+
+.rodape__dentro {
+  max-width: var(--largura);
+  margin: 0 auto;
+  border-top: 1px solid var(--fio);
+  padding-top: calc(56 * var(--su));
+}
+
+.rodape__colunas {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1.2fr;
+  gap: 40px;
+}
+
+.rodape__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.rodape__col .rotulo { margin-bottom: 6px }
+.rodape__desde { color: var(--apoio); font-size: 14px; margin-top: 12px }
+.rodape__end { font-style: normal; color: var(--apoio); font-size: 14px; line-height: 1.5; margin-top: 6px }
+
+.rodape__legal {
+  margin-top: calc(56 * var(--su));
+  padding-top: 22px;
+  border-top: 1px solid var(--fio);
+  font-size: 13px;
+  color: var(--apoio);
+  max-width: 90ch;
+}
+
+.rodape__pe {
+  position: relative;
+  max-width: var(--largura);
+  margin: calc(48 * var(--su)) auto 0;
+  height: calc(min(var(--largura), 100vw - 2 * var(--lateral)) * var(--fecho-prop) * var(--corte));
+}
+
+.rodape__geada {
+  position: absolute;
+  top: -80px;
+  bottom: 0;
+  left: calc(-1 * var(--lateral));
+  right: calc(-1 * var(--lateral));
+  width: calc(100% + 2 * var(--lateral));
+  height: calc(100% + 80px);
+  pointer-events: none;
+}
+
+.rodape__nome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(100% / var(--corte));
+}
+
+/* sem WebGL: o nome em texto, com o pé sumindo */
+.sem-gl .rodape__nome {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: calc(min(var(--largura), 100vw - 2 * var(--lateral)) * 0.36);
+  line-height: 0.74;
+  color: var(--forma);
+  text-align: center;
+  -webkit-mask-image: linear-gradient(to bottom, #000 20%, transparent 70%);
+  mask-image: linear-gradient(to bottom, #000 20%, transparent 70%);
+}
+
+@media (max-width: 760px) {
+  .rodape__colunas { grid-template-columns: 1fr; gap: 34px }
+  .rodape__col { font-size: 16px }
+  .rodape__col .link { padding: 4px 0 }
+  .rodape__pe { margin-top: 36px }
+}
