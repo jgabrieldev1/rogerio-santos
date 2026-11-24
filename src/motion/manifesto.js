@@ -41,10 +41,12 @@ export function iniciaManifesto(calmo) {
   aoRolar(() => {
     const r = frase.getBoundingClientRect()
     const vh = innerHeight
-    // começa quando o topo da frase chega a 88% da tela; termina com o pé em 42%
-    const ini = vh * 0.88
-    const fim = vh * 0.42
-    const p = Math.min(1, Math.max(0, (ini - r.top) / (ini - fim + r.height)))
+    // começa quando o topo da frase entra (92% da tela) e termina quando o
+    // meio dela passa um pouco abaixo do meio da tela: lida no centro, a frase
+    // já está inteira
+    const ini = vh * 0.92
+    const fim = vh * 0.6 - r.height / 2
+    const p = Math.min(1, Math.max(0, (ini - r.top) / Math.max(1, ini - fim)))
     const cursor = p * (n + JANELA)
     for (let i = 0; i < n; i++) {
       const s = Math.min(1, Math.max(0, (cursor - i) / JANELA))

@@ -4,12 +4,12 @@
 .hero {
   /* a geada, em unidades da forma (a caixa da estátua tem 1751 de altura) */
   --g-alt: 1751;
-  --g-foco-0: 472;
-  --g-foco-1: 832;
+  --g-foco-0: 500;
+  --g-foco-1: 860;
   --g-sigma: 88;
   --g-curva: 1.25;
-  --g-some-0: 944;
-  --g-some-1: 1002;
+  --g-some-0: 880;
+  --g-some-1: 965;
   --g-grao: 0.14;
   --g-giro: 1;
   --g-cheia: 5;
@@ -215,15 +215,27 @@
   .hero { --t-topo: calc(520 * var(--u)) }
 }
 
+/* computador de tela baixa (notebook com barras abertas): o bloco do título
+   sobe e o apoio e o botão enxugam, para nada passar do pé da cena */
+@media (min-width: 761px) and (max-height: 740px) {
+  .hero { --t-topo: calc(488 * var(--u)) }
+  .hero__nome { margin-bottom: calc(12 * var(--u)) }
+  .hero__apoio { margin-top: calc(20 * var(--u)); font-size: 13.5px; line-height: 1.45; max-width: 290px }
+  .hero__acao { margin-top: calc(20 * var(--u)); gap: 10px }
+  .hero__acao .botao { min-height: 44px; padding: 0 20px; font-size: 14px }
+  .hero__plantao { font-size: 12.5px }
+}
+
 /* ——— celular: a cena em cima, o título empilhado por cima do pé da foto ——— */
 @media (max-width: 760px) {
   .hero {
     --c: calc(100vw / 390);                /* main.js acerta pela sobra da tela */
     --g-some-0: 1040;
     --g-some-1: 1130;
-    --g-foco-1: 880;
+    --g-foco-0: 600;
+    --g-foco-1: 960;
     --g-sigma: 70;
-    --j-esc: calc(0.355 * var(--c));
+    --j-esc: calc(0.335 * var(--c));
     --j-topo: calc(44 * var(--c));
     --f-alt: calc(262 * var(--c));
     --f-pe: 0px;

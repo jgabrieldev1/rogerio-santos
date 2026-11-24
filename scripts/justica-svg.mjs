@@ -8,8 +8,8 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LARGURA} ${A
 <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
 ${CORTES.map((c) => `<path d="${c.d}" stroke-width="${c.w}"/>`).join('\n')}
 </g></mask></defs>
-<g fill="#eef1f4" mask="url(#c)">
-${FORMA.map((d) => `<path d="${d}"/>`).join('\n')}
+<g fill="#eef1f4" stroke="#eef1f4" stroke-linecap="round" stroke-linejoin="round" mask="url(#c)">
+${FORMA.map((f) => (typeof f === 'string' ? `<path d="${f}" stroke="none"/>` : `<path d="${f.d}" fill="none" stroke-width="${f.w}"/>`)).join('\n')}
 </g>
 </svg>
 `
